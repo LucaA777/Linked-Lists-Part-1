@@ -15,6 +15,7 @@ using namespace std;
 
 void add(Student* nStudent, Node* &head);
 void print(Node* current, Node* &head);
+void remove(Student* student, Node* previous, Node* current, Node* &head);
 
 int main() {
 
@@ -24,9 +25,15 @@ int main() {
   //add and print tests
   add(new Student("Luca", 497022), head);
   print(head, head);
-  add(new Student("Evan", 530232), head);
+  Student* s2 = new Student("Evan", 350434);
+  add(s2, head);
   print(head, head);
-  add(new Student("Emily", 457203), head);
+  Student* s3 = new Student("Emily", 463454);
+  add(s3, head);
+  print(head, head);
+
+  remove(s2, head, head, head);
+  cout << "REMOVE SUCCESSFUL" << endl;
   print(head, head);
 
   
@@ -38,8 +45,7 @@ void add(Student* nStudent, Node* &head) {
 
   //if the head is empty, then assign the student to the head
   if (current == NULL) {
-    head = new Node();
-    head -> setStudent(nStudent);
+    head = new Node(nStudent);
   }
   else {
     //iterate till a null node is found
@@ -47,8 +53,7 @@ void add(Student* nStudent, Node* &head) {
       current = current -> getNext();
     }
     //assign the student to a new node at the end
-    current -> setNext(new Node());
-    current -> getNext() -> setStudent(nStudent);
+    current -> setNext(new Node(nStudent));
   }
 }
 
@@ -68,3 +73,36 @@ void print(Node* current, Node* &head) {
     cout << endl;
   }
 }
+
+void remove(Student* student, Node* previous, Node* current, Node* &head) {
+  
+  //if student matches, remove them
+  if (student == current -> getStudent()) {
+    cout << "-FOUND MATCH" << endl;
+    //if the current is the head, then there is no previous
+    //next becomes new head
+    if (current == head) {
+      cout << "--HEAD DELETION" << endl;
+      delete head;
+      head = current -> getNext();
+    }
+    //if this is the last node, set the new next to be null
+    else if (current -> getNext() == NULL) {
+      cout << "--TAIL DELETION" << endl;
+      previous -> setNext(NULL);
+      delete current;
+      cout << "--TAIL DELETION COMPLETED" << endl;
+    }
+    else {
+      cout << "--BODY DELETION" << endl;
+      previous -> setNext(current -> getNext());
+      delete current;
+    }
+  }
+
+  //if the current node isn't the last one, continue the search
+  else if (current -> getNext() != NULL) {
+    remove(student, current, current -> getNext(), head);
+  }
+}
+

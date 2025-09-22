@@ -1,17 +1,15 @@
 #include "Node.h"
 
-Node::Node() {
-  student = NULL;
+Node::Node(Student* nStudent) {
+  student = nStudent;
   next = NULL;
 }
 
 Node::~Node() {
+  cout << "---NODE DESTRUCTOR CALLED" << endl;
   delete &student;
   next = NULL;
-}
-
-void Node::setStudent(Student* nStudent) {
-  student = nStudent;
+  cout << "---NODE DESTRUCTOR COMPLETED" << endl;
 }
 
 Student* Node::getStudent() {
