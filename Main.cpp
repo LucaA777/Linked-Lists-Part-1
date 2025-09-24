@@ -85,6 +85,7 @@ void remove(Student* student, Node* previous, Node* current, Node* &head) {
       cout << "--HEAD DELETION" << endl;
       delete head;
       head = current -> getNext();
+      cout << "--HEAD DELETION COMPLETED" << endl;
     }
     //if this is the last node, set the new next to be null
     else if (current -> getNext() == NULL) {
@@ -97,6 +98,7 @@ void remove(Student* student, Node* previous, Node* current, Node* &head) {
       cout << "--BODY DELETION" << endl;
       previous -> setNext(current -> getNext());
       delete current;
+      cout << "--BODY DELETION COMPLETED" << endl;
     }
   }
 

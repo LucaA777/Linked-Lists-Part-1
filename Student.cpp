@@ -8,8 +8,7 @@ Student::Student(const char nName[20], int nID) {
 }
 
 Student::~Student() {
-  delete &name;
-  delete &ID;
+  delete name;
 }
 
 char* Student::getName() {
