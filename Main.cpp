@@ -1,9 +1,11 @@
 /*
 This program creates a linked list of students. It has the capabilities
 to add to the list and print the list. 
-  
+
+Source: https://www.youtube.com/watch?v=rVB-Y98LVwo (Mr. Galbraith's video on linked lists)
+
 Author: Luca Ardanaz
-Last Updated: 9/21/2025
+Last Updated: 9/24/2025
  */
 
 #include <iostream>
@@ -23,19 +25,31 @@ int main() {
   Node* head = NULL;
 
   //add and print tests
+  Student* s1 = new Student("Jake", 540543);
+  add(s1, head);
+  
   add(new Student("Luca", 497022), head);
   print(head, head);
+
   Student* s2 = new Student("Evan", 350434);
   add(s2, head);
   print(head, head);
+
   Student* s3 = new Student("Emily", 463454);
   add(s3, head);
   print(head, head);
 
+  //body deletion
   remove(s2, head, head, head);
-  cout << "REMOVE SUCCESSFUL" << endl;
   print(head, head);
 
+  //tail deletion
+  remove(s3, head, head, head);
+  print(head, head);
+
+  //head deletion
+  remove(s1, head, head, head);
+  print(head, head);
   
   return 0;
 }
@@ -78,27 +92,20 @@ void remove(Student* student, Node* previous, Node* current, Node* &head) {
   
   //if student matches, remove them
   if (student == current -> getStudent()) {
-    cout << "-FOUND MATCH" << endl;
     //if the current is the head, then there is no previous
     //next becomes new head
     if (current == head) {
-      cout << "--HEAD DELETION" << endl;
-      delete head;
       head = current -> getNext();
-      cout << "--HEAD DELETION COMPLETED" << endl;
+      delete current;
     }
     //if this is the last node, set the new next to be null
     else if (current -> getNext() == NULL) {
-      cout << "--TAIL DELETION" << endl;
       previous -> setNext(NULL);
       delete current;
-      cout << "--TAIL DELETION COMPLETED" << endl;
     }
     else {
-      cout << "--BODY DELETION" << endl;
       previous -> setNext(current -> getNext());
       delete current;
-      cout << "--BODY DELETION COMPLETED" << endl;
     }
   }
 
